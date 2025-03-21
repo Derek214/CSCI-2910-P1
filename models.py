@@ -1,5 +1,6 @@
 from sqlalchemy import Column, Integer, String, Boolean
 from sqlalchemy.orm import declarative_base
+from pydantic import BaseModel
 
 Base = declarative_base()
 
@@ -19,3 +20,24 @@ class Post(Base):
     title = Column(String)
     post_text = Column(String)
     likes = Column(Integer, default=0)
+    
+
+class PostUpdate(BaseModel):
+    title: str
+    post_text: str
+    
+    
+class UserCreate(BaseModel):
+    username: str
+    image_url: str
+    is_admin: bool = False
+
+class PostCreate(BaseModel):
+    user_id: int
+    title: str
+    post_text: str
+
+class UserUpdate(BaseModel):
+    username: str
+    image_url: str
+    is_admin: bool
