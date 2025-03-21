@@ -115,3 +115,10 @@ def update_user(user_id: int, user_update: UserUpdate, db: Session = Depends(get
     db.commit()
     
     return {"message": "User updated successfully", "user_id": user_id}
+
+@app.patch("/users/{user_id}/is_admin")
+def patch_user_is_admin(user_id: int, is_admin: bool, db: Session = Depends(get_db)):
+    db.execute(update(User).where(User.id == user_id).values(is_admin=is_admin))
+    db.commit()
+    
+    return {"message": "User admin status updated successfully", "user_id": user_id, "is_admin": is_admin}
